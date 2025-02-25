@@ -1,6 +1,5 @@
 import { type NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import { getInfo } from '@/app/api/utils/common'
 
 export async function POST(request: NextRequest) {
     try {
@@ -11,12 +10,21 @@ export async function POST(request: NextRequest) {
             payload
         } = body
 
-        console.log("request recieved from LLM", body)
+        console.log("Request received from LLM", body)
 
-        // For now, we'll just return an empty JSON response
-        return NextResponse.json({})
+        global.sockets.forEach(socket => {
+            console.log("sending to ", socket.id)
+            socket.emit("tokens", body);
+        })
+
+        console.log("Message broadcast to all clients");
+        return NextResponse.json({
+            success: true,
+            message: "Broadcast sent successfully"
+        });
     }
     catch (error: any) {
+        console.error("Error in tokens route:", error);
         return NextResponse.json({ error: error.message }, { status: 400 })
     }
 } 
