@@ -22,6 +22,7 @@ import AppUnavailable from '@/app/components/app-unavailable'
 import { API_KEY, APP_ID, APP_INFO, isShowPrompt, promptTemplate } from '@/config'
 import type { Annotation as AnnotationType } from '@/types/log'
 import { addFileInfos, sortAgentSorts } from '@/utils/tools'
+import SocketListener from './socket-listener'
 
 export type IMainProps = {
   params: any
@@ -670,6 +671,7 @@ const Main: FC<IMainProps> = () => {
           }
         </div>
       </div>
+      <SocketListener />
     </div>
   )
 }
