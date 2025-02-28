@@ -1,0 +1,88 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Launch a new token",
+        "description": "Launches a new token with name, symbol and decimals",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://34.147.138.30:3000/api"
+        }
+    ],
+    "paths": {
+        "/tokens": {
+            "post": {
+                "summary": "Launches a new token for a given name, symbol and decimals",
+                "description": "Launches a new token for a given name, symbol and decimals",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "user",
+                                    "conversationId",
+                                    "payload"
+                                ],
+                                "properties": {
+                                    "user": {
+                                        "type": "string",
+                                        "description": "User identifier"
+                                    },
+                                    "conversationId": {
+                                        "type": "string",
+                                        "description": "ID of the conversation"
+                                    },
+                                    "payload": {
+                                        "type": "object",
+                                        "description": "the payload that contains the name, symbol and decimals of the token"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "acknowledges if the token was launched successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Broadcast sent successfully"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error broadcasting tokens",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "description": "Error message"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
